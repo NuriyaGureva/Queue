@@ -11,7 +11,7 @@ class Queue
     {
         int Data;
         Node* pNext;    
-
+        Node* pPrev;
      public:
 
          Node(int Data, Node*pNext=nullptr)
@@ -78,6 +78,8 @@ public:
             Temp->Tail = nullptr;
         
     }
+
+
 };
 
 
@@ -88,10 +90,11 @@ int main()
     int n;
     queue <int> que({ 3,5,8,13,21 });
     que.push(10);
-    cout << que.back() << '\n';
-    cout << que.front() << '\n';
+    cout <<"Первый элемент очереди\t"<< que.front()  <<'\n';
+    cout <<"Последний элемент очереди\t"<<que.back() <<'\n';
     que.pop();
-    cout << que.size() << '\n';
+    cout <<"Размер очереди\t"<< que.size()<< '\n';
+  
 
     if (que.empty())
         cout << "Очередь  пуста" << endl;
