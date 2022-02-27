@@ -81,13 +81,13 @@ public:
 };
 
 
-
 int main()
 {
     setlocale(LC_ALL,"");
 
     int n;
     queue <int> que({ 3,5,8,13,21 });
+    que.push(10);
     cout << que.back() << '\n';
     cout << que.front() << '\n';
     que.pop();
