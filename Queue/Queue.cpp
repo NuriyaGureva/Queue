@@ -1,37 +1,40 @@
 ﻿
 #include <iostream>
 #include<queue>
-
+#define tab "\t"
 using namespace std;
 
 
 class Queue
 {
-    class Node
+    class Element
     {
         int Data;
-        Node* pNext;    
-        Node* pPrev;
+        Element* pNext;    
      public:
 
-         Node(int Data, Node*pNext=nullptr)
+         Element(int Data, Element*pNext=nullptr)
          {
+             this->Data = Data;
+             this->pNext = pNext;
              cout << " NConsructor:\t" << this << endl;
          }
-         ~Node()
+         ~Element()
          {
              cout << "QDestructor:\t" << this << endl;
          }
 
          friend class Queue;
     }*Head,*Tail;
-    size_t size;
 
 public:
+    size_t size;
+
     Queue()
     {
         Head = Tail = nullptr;
         size = 0;
+
         cout << " QConsructor:\t" << this << endl;
     }
     ~Queue()
@@ -39,47 +42,38 @@ public:
       
         cout << "QDestructor:\t" << this << endl;
     }
-
-    Queue* create()
+ 
+    void enqueue(int Data)
     {
+        Element* New = new Element(Data);
 
-        Queue* Temp = new Queue();
-
-        Temp->Head= Temp->Tail = nullptr;
-
-        return Temp;
-
-    }
-
-    void enQueue(Queue* Temp, int Data)
-    {
-        Node* New = new Node(Data);
-
-        if (Temp->Tail==nullptr)
+        if (Tail == nullptr)
         {
-            Temp->Head=Temp->Tail=New;
+            Head = Tail = New;
+            size++;
             return;
         }
-        Temp->Tail->pNext = New;
-        Temp->Tail = New;      
+
+        Tail->pNext = New;
+        Tail = New;
+        size++;
     }
 
-    void deQueue(Queue* Temp)
+    void dequeue()
     {
-        if (Temp->Head == nullptr) return;
+        if (Head == nullptr) return;
 
-
-        Node* New = Temp->Head;
-        delete (New);
-
-
-        if (Temp->Head == nullptr)
-
-            Temp->Tail = nullptr;
-        
+        Head = Head->pNext;
+        size--;
     }
 
 
+    void print()const
+    {
+        cout << "Количество элементов списка: " << size << endl;
+        for (Element* Temp = Head; Temp; Temp = Temp->pNext)
+            cout << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
+    }
 };
 
 
@@ -87,20 +81,18 @@ int main()
 {
     setlocale(LC_ALL,"");
 
-    int n;
-    queue <int> que({ 3,5,8,13,21 });
-    que.push(10);
-    cout <<"Первый элемент очереди\t"<< que.front()  <<'\n';
-    cout <<"Последний элемент очереди\t"<<que.back() <<'\n';
-    que.pop();
-    cout <<"Размер очереди\t"<< que.size()<< '\n';
-  
+    Queue que;
 
-    if (que.empty())
-        cout << "Очередь  пуста" << endl;
-    else
-        cout << "Очередь не пуста" << endl;
+    que.enqueue(111);
+    cout << "Размер очереди\t" << que.size << '\n';
+    que.enqueue(222);
+    cout << "Размер очереди\t" << que.size << '\n';
+    que.enqueue(333);
+    cout << "Размер очереди\t" << que.size << '\n';
 
-   
+    que.print();
+    que.dequeue();
+    cout << "Размер очереди\t" << que.size << '\n';
+    que.print();
 }
 
